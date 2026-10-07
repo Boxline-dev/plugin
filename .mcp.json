@@ -1,0 +1,5 @@
+{
+  "mcpServers": {
+    "boxline": { "type": "http", "url": "https://mcp.boxline.dev/mcp" }
+  }
+}

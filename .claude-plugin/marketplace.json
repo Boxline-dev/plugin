@@ -1,0 +1,13 @@
+{
+  "name": "boxline",
+  "description": "Boxline: cloud browsers, shells and web search for your agent.",
+  "owner": {
+    "name": "Boxline"
+  },
+  "plugins": [
+    {
+      "name": "boxline",
+      "source": "./"
+    }
+  ]
+}

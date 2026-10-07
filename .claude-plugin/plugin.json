@@ -1,0 +1,16 @@
+{
+  "name": "boxline",
+  "displayName": "Boxline",
+  "version": "1.0.0",
+  "description": "Cloud browsers, shells and web search for your agent: open real pages in an isolated browser, read and act on them, search the web, and run code in a clean sandbox.",
+  "author": { "name": "Boxline", "url": "https://boxline.dev" },
+  "homepage": "https://boxline.dev",
+  "repository": "https://github.com/Boxline-dev/plugin",
+  "license": "MIT",
+  "keywords": ["browser", "web", "search", "sandbox", "shell", "automation"],
+  "icon": "./assets/icon.png",
+  "documentationUrl": "https://docs.boxline.dev/mcp",
+  "supportUrl": "https://github.com/Boxline-dev/plugin/issues",
+  "privacyPolicyUrl": "https://boxline.dev/legal/privacy",
+  "termsOfServiceUrl": "https://boxline.dev/legal/terms"
+}
