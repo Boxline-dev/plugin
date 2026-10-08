@@ -10,12 +10,16 @@ their Boxline credit while it runs, so start one only when a browser is really n
 
 ## Steps
 
-1. `session_create` starts a machine and returns its `sessionId`. Pass that `sessionId` to every other tool.
-2. `browser_navigate` opens a URL. `browser_read` returns the page as markdown (or HTML or text);
+1. `session_create` starts a machine and returns its `sessionId`. Pass that `sessionId` to every other session tool;
+   `session_list` finds it again if you lose it.
+2. `browser_navigate` opens a URL. `browser_read` returns the page as markdown (or text);
    `browser_screenshot` shows it when the layout matters.
-3. Act on the page with `browser_click` (a CSS selector, or x/y from a screenshot), `browser_type`, `browser_press`,
-   `hover` and `key`. Read or screenshot again after each step that changes the page, to confirm what happened.
-4. Files: `list_files`, `read_file` and `write_file` work in the machine's `/workspace`.
+3. Act on the page with `browser_click` (a CSS selector, or x/y from a screenshot), `browser_type` and `browser_press`
+   (`Enter`, `Control+A`, `ctrl+a Delete`). For anything else (hover, scroll, drag, a right or double click) or several
+   steps at once, use `browser_act`: each step is a sentence ("scroll to the pricing table") or an exact action such as
+   `{"action": "hover", "selector": "text=Products"}`. A sentence is carried out by a model, so prefer exact actions when
+   you know the selector. Read or screenshot again after each step that changes the page, to confirm what happened.
+4. Files: `files_list`, `files_read` and `files_write` work in the machine's `/workspace`.
 5. When the task is done, call `session_stop` (it saves the machine as it is and stops billing; `session_resume` brings
    it back) or `session_delete` if nothing needs keeping. Tell the user which one you did.
 

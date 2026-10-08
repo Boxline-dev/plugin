@@ -10,24 +10,27 @@ as its disk. Nothing in it touches the user's computer. It uses the user's Boxli
 
 ## Steps
 
-1. `session_create` with `shell: true`. Keep the `sessionId` it returns and pass it to every other tool.
-2. Put files in place with `write_file` (paths under `/workspace`), or fetch them inside the machine with `run_command`
+1. `session_create` with `shell: true`, and `browser: false` when no browser is needed (a shell-only machine has no live
+   view and its browser tools are refused). Keep the `sessionId` it returns and pass it to every other tool;
+   `session_list` finds it again.
+2. Put files in place with `files_write` (paths under `/workspace`), or fetch them inside the machine with `shell_exec`
    (for example `git clone …` or `curl -O …`).
-3. Run things with `run_command` (bash; it returns the output and the exit code). Give long jobs a `timeoutMs`.
-   For browser scripts, `run_playwright` runs Playwright code against the machine's own Chrome.
-4. Read results with `read_file` or `list_files`, and report what happened: the command, the exit code, and the
+3. Run things with `shell_exec` (bash; it returns the output and the exit code). Give long jobs a `timeoutMs`, or start
+   them in the background (`nohup … > job.log 2>&1 &`) and read `job.log` later. A machine that has a browser can also
+   be driven with `browser_act`.
+4. Read results with `files_read` or `files_list`, and report what happened: the command, the exit code, and the
    important lines of output (not pages of logs).
 5. When finished, `session_stop` (saves it and stops billing) or `session_delete` (nothing to keep). Say which.
 
 ## The disk
 
 - `/workspace` is the machine's disk. Use it for downloads, cloned repositories, build output and results.
-- `list_files` shows a folder with sizes, `read_file` returns a text file, `write_file` creates or replaces one, and
-  `delete_file` removes one.
-- To check space, use `run_command` with `df -h /workspace` and `du -sh /workspace/*`.
+- `files_list` shows a folder with sizes, `files_read` returns a text file, `files_write` creates or replaces one, and
+  `files_delete` removes one.
+- To check space, use `shell_exec` with `df -h /workspace` and `du -sh /workspace/*`.
 - `session_stop` keeps the disk as it is, and `session_resume` brings it back for a later step. `session_delete` erases
   it.
-- To hand a result to the user, read it back (`read_file`) or put it somewhere they can reach, and say where.
+- To hand a result to the user, read it back (`files_read`) or put it somewhere they can reach, and say where.
 
 ## Rules
 

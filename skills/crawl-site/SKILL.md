@@ -10,23 +10,23 @@ side (no machine for you to manage), respects the site's robots.txt, and stays o
 
 ## Tools
 
-- `crawl_site` starts a crawl and waits briefly for it. Options:
+- `web_crawl_start` starts a crawl and waits briefly for it. Options:
   - `url`: the start page;
-  - `maxPages` (default 20, at most 200) and `maxDepth` (default 3);
+  - `maxPages` (default 20; the plan's crawl limit applies) and `maxDepth` (default 3);
   - `include` / `exclude`: regular expressions on URLs;
   - `format`: markdown, text or html.
 
   It returns the pages read so far, or a `crawlId` while it is still running.
-- `crawl_results` takes a `crawlId` (and `after` to page through) and returns the next pages and whether the crawl has
+- `web_crawl_get` takes a `crawlId` (and `after` to page through) and returns the next pages and whether the crawl has
   finished.
-- For one page, `fetch_url` is enough. For something behind clicks or a form, use the `browse` skill.
+- For one page, `web_fetch` is enough. For something behind clicks or a form, use the `browse` skill.
 
 ## Steps
 
 1. Agree the scope in one line if it is unclear: which section, how many pages. Start small (20 pages) and grow only
    if needed.
 2. Narrow with `include` (for example `^https://docs\.example\.com/guides/`) rather than crawling everything.
-3. Call `crawl_site`. While it runs, call `crawl_results` with the `crawlId` until it says it has finished.
+3. Call `web_crawl_start`. While it runs, call `web_crawl_get` with the `crawlId` until it says it has finished.
 4. Work from the pages: answer the question, build the site map (title, URL, depth), or summarize each section. Name
    the pages each statement comes from.
 5. Report what was skipped: pages refused by robots.txt (`skippedByRobots`), failed pages, and anything cut by
